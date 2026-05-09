@@ -3,7 +3,7 @@ import css from "./NoteForm.module.css";
 import * as Yup from "yup";
 import type { NewNote } from "../../types/note";
 
-interface NoteFormFn {
+interface NoteFormProps {
   onClose: () => void;
   onSubmit: (note: NewNote) => void;
 }
@@ -28,7 +28,7 @@ const NoteFormInitialValues: NewNote = {
   tag: "Todo",
 };
 
-export default function NoteForm({ onClose, onSubmit }: NoteFormFn) {
+export default function NoteForm({ onClose, onSubmit }: NoteFormProps) {
   const handleCloseClik = (
     event: React.MouseEvent<HTMLButtonElement>,
   ): void => {
