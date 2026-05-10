@@ -1,16 +1,16 @@
 import css from "./SearchBox.module.css";
 
 interface SearchBoxProps {
-  onSubmit: (search: string) => void;
+  onSearch: (search: string) => void;
 }
 
-export default function SearchBox({ onSubmit }: SearchBoxProps) {
+export default function SearchBox({ onSearch }: SearchBoxProps) {
   const handleSearch = (value: string) => {
     if (!value.trim()) {
       return;
     }
 
-    onSubmit(value);
+    onSearch(value);
   };
 
   return (

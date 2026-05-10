@@ -2,10 +2,11 @@ import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from "formik";
 import css from "./NoteForm.module.css";
 import * as Yup from "yup";
 import type { NewNote } from "../../types/note";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createNoteAPI } from "../../services/noteService";
 
 interface NoteFormProps {
   onClose: () => void;
-  onSubmit: (note: NewNote) => void;
 }
 
 const NoteFormSchem = Yup.object({
@@ -28,7 +29,7 @@ const NoteFormInitialValues: NewNote = {
   tag: "Todo",
 };
 
-export default function NoteForm({ onClose, onSubmit }: NoteFormProps) {
+export default function NoteForm({ onClose }: NoteFormProps) {
   const handleCloseClik = (
     event: React.MouseEvent<HTMLButtonElement>,
   ): void => {
@@ -37,11 +38,21 @@ export default function NoteForm({ onClose, onSubmit }: NoteFormProps) {
     }
   };
 
+  const queryClient = useQueryClient();
+
+  const mutationCreatae = useMutation({
+    mutationFn: createNoteAPI,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["note"] });
+      onClose();
+    },
+  });
+
   const handleSubmit = (
     values: NewNote,
     formikHelpers: FormikHelpers<NewNote>,
   ) => {
-    onSubmit(values);
+    mutationCreatae.mutate(values);
     formikHelpers.resetForm();
   };
 
