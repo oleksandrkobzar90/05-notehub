@@ -1,9 +1,9 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import css from "./NoteForm.module.css";
-import * as Yup from "yup";
-import type { NewNote } from "../../types/note";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createNoteAPI } from "../../services/noteService";
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import css from './NoteForm.module.css';
+import * as Yup from 'yup';
+import type { NewNote } from '../../types/note';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createNoteAPI } from '../../services/noteService';
 
 interface NoteFormProps {
   onClose: () => void;
@@ -11,22 +11,22 @@ interface NoteFormProps {
 
 const NoteFormSchema = Yup.object({
   title: Yup.string()
-    .min(3, "Title must be at least 3 characters")
-    .max(50, "Title must contain no more than 50 characters.")
-    .required("Required"),
+    .min(3, 'Title must be at least 3 characters')
+    .max(50, 'Title must contain no more than 50 characters.')
+    .required('Required'),
   content: Yup.string().max(
     500,
-    "Content must contain no more than 500 characters.",
+    'Content must contain no more than 500 characters.'
   ),
   tag: Yup.string()
-    .oneOf(["Todo", "Work", "Personal", "Meeting", "Shopping"])
-    .required("Required"),
+    .oneOf(['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'])
+    .required('Required'),
 });
 
 const NoteFormInitialValues: NewNote = {
-  title: "",
-  content: "",
-  tag: "Todo",
+  title: '',
+  content: '',
+  tag: 'Todo',
 };
 
 export default function NoteForm({ onClose }: NoteFormProps) {
@@ -39,7 +39,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
   const mutationCreate = useMutation({
     mutationFn: createNoteAPI,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["note"] });
+      queryClient.invalidateQueries({ queryKey: ['note'] });
       onClose();
     },
   });

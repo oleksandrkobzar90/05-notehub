@@ -1,4 +1,4 @@
-export type NoteTag = "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+export type NoteTag = 'Todo' | 'Work' | 'Personal' | 'Meeting' | 'Shopping';
 
 export interface Note {
   id: string;
@@ -9,4 +9,4 @@ export interface Note {
   tag: NoteTag;
 }
 
-export type NewNote = Omit<Note, "id" | "createdAt" | "updatedAt">;
+export type NewNote = Omit<Note, 'id' | 'createdAt' | 'updatedAt'>;

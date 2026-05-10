@@ -1,24 +1,24 @@
-import { useState } from "react";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import SearchBox from "../SearchBox/SearchBox";
-import css from "./App.module.css";
-import { fetchNotes } from "../../services/noteService.ts";
-import NoteList from "../NoteList/NoteList.tsx";
-import Pagination from "../Pagination/Pagination.tsx";
-import Loader from "../Loader/Loader.tsx";
-import ErrorMessage from "../ErrorMessage/ErrorMessage.tsx";
-import { useDebouncedCallback } from "use-debounce";
-import Modal from "../Modal/Modal.tsx";
-import NoteForm from "../NoteForm/NoteForm.tsx";
+import { useState } from 'react';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import SearchBox from '../SearchBox/SearchBox';
+import css from './App.module.css';
+import { fetchNotes } from '../../services/noteService.ts';
+import NoteList from '../NoteList/NoteList.tsx';
+import Pagination from '../Pagination/Pagination.tsx';
+import Loader from '../Loader/Loader.tsx';
+import ErrorMessage from '../ErrorMessage/ErrorMessage.tsx';
+import { useDebouncedCallback } from 'use-debounce';
+import Modal from '../Modal/Modal.tsx';
+import NoteForm from '../NoteForm/NoteForm.tsx';
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading, isSuccess, isError } = useQuery({
-    queryKey: ["note", search, currentPage],
+    queryKey: ['note', search, currentPage],
     queryFn: () => fetchNotes(search, currentPage),
     placeholderData: keepPreviousData,
   });
