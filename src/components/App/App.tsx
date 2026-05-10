@@ -24,7 +24,7 @@ export default function App() {
   });
 
   const handleSearch = useDebouncedCallback((newQuery: string) => {
-    setSearch(newQuery);
+    setSearch(newQuery.trim());
     setCurrentPage(1);
   }, 1000);
 

@@ -6,10 +6,6 @@ interface SearchBoxProps {
 
 export default function SearchBox({ onSearch }: SearchBoxProps) {
   const handleSearch = (value: string) => {
-    if (!value.trim()) {
-      return;
-    }
-
     onSearch(value);
   };
 

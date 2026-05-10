@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import css from "./NoteForm.module.css";
 import * as Yup from "yup";
 import type { NewNote } from "../../types/note";
@@ -9,7 +9,7 @@ interface NoteFormProps {
   onClose: () => void;
 }
 
-const NoteFormSchem = Yup.object({
+const NoteFormSchema = Yup.object({
   title: Yup.string()
     .min(3, "Title must be at least 3 characters")
     .max(50, "Title must contain no more than 50 characters.")
@@ -30,17 +30,13 @@ const NoteFormInitialValues: NewNote = {
 };
 
 export default function NoteForm({ onClose }: NoteFormProps) {
-  const handleCloseClik = (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ): void => {
-    if (event.target === event.currentTarget) {
-      onClose();
-    }
+  const handleCloseClick = (): void => {
+    onClose();
   };
 
   const queryClient = useQueryClient();
 
-  const mutationCreatae = useMutation({
+  const mutationCreate = useMutation({
     mutationFn: createNoteAPI,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["note"] });
@@ -48,19 +44,15 @@ export default function NoteForm({ onClose }: NoteFormProps) {
     },
   });
 
-  const handleSubmit = (
-    values: NewNote,
-    formikHelpers: FormikHelpers<NewNote>,
-  ) => {
-    mutationCreatae.mutate(values);
-    formikHelpers.resetForm();
+  const handleSubmit = (values: NewNote) => {
+    mutationCreate.mutate(values);
   };
 
   return (
     <Formik
       initialValues={NoteFormInitialValues}
       onSubmit={handleSubmit}
-      validationSchema={NoteFormSchem}
+      validationSchema={NoteFormSchema}
     >
       <Form className={css.form}>
         <div className={css.formGroup}>
@@ -97,7 +89,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
           <button
             type="button"
             className={css.cancelButton}
-            onClick={handleCloseClik}
+            onClick={handleCloseClick}
           >
             Cancel
           </button>
