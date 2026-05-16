@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from 'formik';
 import css from './NoteForm.module.css';
 import * as Yup from 'yup';
 import type { NewNote } from '../../types/note';
@@ -44,8 +44,9 @@ export default function NoteForm({ onClose }: NoteFormProps) {
     },
   });
 
-  const handleSubmit = (values: NewNote) => {
+  const handleSubmit = (values: NewNote, actions: FormikHelpers<NewNote>) => {
     mutationCreate.mutate(values);
+    actions.resetForm();
   };
 
   return (
@@ -93,7 +94,11 @@ export default function NoteForm({ onClose }: NoteFormProps) {
           >
             Cancel
           </button>
-          <button type="submit" className={css.submitButton} disabled={false}>
+          <button
+            type="submit"
+            className={css.submitButton}
+            disabled={mutationCreate.isPending}
+          >
             Create note
           </button>
         </div>
